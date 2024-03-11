@@ -25,6 +25,7 @@ public class ArrayCal {
             // Get User-Agent from the request headers
             String userAgent = httpRequest.getHeader("User-Agent");
 
+            // Method to receive type of operation to perform as per client request
             String operation = (String) request.getData().get("operation");
             @SuppressWarnings("unchecked")
             List<Number> numbers = (List<Number>) request.getData().get("numbers");
@@ -53,15 +54,18 @@ public class ArrayCal {
     }
 
     private double performOperation(String operation, List<Number> numbers) {
+        // Exception handling for Illegal Argument
         if (numbers == null || numbers.size() < 2) {
             throw new IllegalArgumentException("At least two numbers are required for the operation.");
         }
 
-        double result = switch (operation) {
+        // Switch case to perform operations
+        return switch (operation) {
             case "add" -> numbers.stream().mapToDouble(Number::doubleValue).sum();
             case "subtract" -> numbers.get(0).doubleValue() - numbers.get(1).doubleValue();
             case "multiply" -> numbers.stream().mapToDouble(Number::doubleValue).reduce(1, (a, b) -> a * b);
             case "divide" -> {
+                // Convertion to double
                 double num1 = numbers.get(0).doubleValue();
                 double num2 = numbers.get(1).doubleValue();
                 if (num2 == 0) {
@@ -69,18 +73,8 @@ public class ArrayCal {
                 }
                 yield num1 / num2;
             }
-            // case "mean" -> {
-            // return calculateMean(numbers);
-            // }
-            // case "min" -> {
-            // return calculateMin(numbers);
-            // }
-            // case "max" -> {
-            // return calculateMax(numbers);
-            // }
+
             default -> throw new IllegalArgumentException("Invalid operation: " + operation);
         };
-
-        return result;
     }
 }

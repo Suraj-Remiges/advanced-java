@@ -22,19 +22,23 @@ public class MathController {
             double num1 = ((Number) request.getData().get("num1")).doubleValue();
             double num2 = ((Number) request.getData().get("num2")).doubleValue();
 
+            // switch case used to perform operations as per client request
             double result = switch (operation) {
                 case "add" -> num1 + num2;
                 case "subtract" -> num1 - num2;
                 case "multiply" -> num1 * num2;
                 case "divide" -> {
+                    // Handling of Division by zero exception
                     if (num2 == 0) {
                         throw new IllegalArgumentException("Division by zero is not allowed.");
                     }
                     yield num1 / num2;
                 }
+                // Exception to occur when operations does not match
                 default -> throw new IllegalArgumentException("Invalid operation: " + operation);
             };
 
+            // Response after performing operation
             Response response = new Response("success", "200", "", Map.of("result", result), request.getReqId(), null);
             response.setServerTs(Instant.now());
             return ResponseEntity.ok(response);
@@ -43,6 +47,7 @@ public class MathController {
         }
     }
 
+    // Exception response to display
     private ResponseEntity<Response> handleException(Exception e, String reqId) {
         Response eResponse = new Response(reqId, reqId, reqId, null, reqId, null);
         eResponse.setStatus("errro");
@@ -52,16 +57,4 @@ public class MathController {
         eResponse.setServerTs(Instant.now());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(eResponse);
     }
-
-    // static class Result {
-    // private final double result;
-
-    // public Result(double result) {
-    // this.result = result;
-    // }
-
-    // public double getResult() {
-    // return result;
-    // }
-    // }
 }

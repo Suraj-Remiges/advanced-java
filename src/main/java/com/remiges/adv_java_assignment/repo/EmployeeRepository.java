@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.remiges.adv_java_assignment.entity.Employee;
 
+//Employee Repository extending JpaRepository
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 

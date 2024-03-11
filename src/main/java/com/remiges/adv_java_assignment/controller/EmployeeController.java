@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,13 +16,13 @@ import com.remiges.adv_java_assignment.service.EmployeeService;
 
 @RestController
 @RequestMapping("myhr/employee")
-public class Employee_Controller {
+public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<Object> addEmployee(@RequestBody Employee employee) {
         try {
             Employee savedEmployee = employeeService.saveEmployee(employee);
             return ResponseEntity.ok().body(savedEmployee);
@@ -37,4 +39,16 @@ public class Employee_Controller {
         }
     }
 
+    @GetMapping("/list")
+    public ResponseEntity<java.util.List<Object[]>> employeeList() {
+        java.util.List<Object[]> employees = employeeService.employeeList();
+        return ResponseEntity.ok().body(employees);
+
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Integer id) {
+        return employeeService.getEmployeeById(id).map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

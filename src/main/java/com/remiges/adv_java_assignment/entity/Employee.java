@@ -17,20 +17,21 @@ import lombok.Data;
 @Data
 @Table(name = "employee")
 @Entity
+// Emplyee entity
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true)
-    private String emp_id;
+    @Column(nullable = false, unique = true, name = "emp_id")
+    private String empId;
 
-    @Column(nullable = false)
-    private String f_name;
+    @Column(nullable = false, name = "f_name")
+    private String fName;
 
-    @Column(nullable = false)
-    private String full_name;
+    @Column(nullable = false, name = "full_name")
+    private String fullName;
 
     @Column(nullable = false)
     private Date dob;
@@ -41,37 +42,52 @@ public class Employee {
     @Column(nullable = false)
     private Integer salary;
 
-    private Integer reports_to;
+    @Column(name = "reports_to")
+    private Integer reportsTo;
 
-    private Integer dept_id;
+    @Column(name = "dept_id")
+    private Integer deptId;
 
-    private Integer rank_id;
+    @Column(name = "rank_id")
+    private Integer rankId;
 
     @CreationTimestamp
-    private java.util.Date create_date;
+    @Column(name = "create_date")
+    private java.util.Date createDate;
 
     @UpdateTimestamp
-    private java.util.Date update_date;
+    @Column(name = "update_date")
+    private java.util.Date updateDate;
 
     @UuidGenerator
-    private String client_reqid;
+    @Column(name = "client_reqid")
+    private String clientReqId;
 
-    public Employee(Integer id, String emp_id, String f_name, String full_name, Date dob, Date doj, Integer salary,
-            Integer reports_to, Integer dept_id, Integer rank_id, java.util.Date create_date,
-            java.util.Date update_date, String client_reqid) {
+    // Constructor
+    public Employee(Integer id, String empId, String fName, String fullName, Date dob, Date doj, Integer salary,
+            Integer reportsTo, Integer deptId, Integer rankId, java.util.Date createDate, java.util.Date updateDate,
+            String clientReqId) {
         this.id = id;
-        this.emp_id = emp_id;
-        this.f_name = f_name;
-        this.full_name = full_name;
+        this.empId = empId;
+        this.fName = fName;
+        this.fullName = fullName;
         this.dob = dob;
         this.doj = doj;
         this.salary = salary;
-        this.reports_to = reports_to;
-        this.dept_id = dept_id;
-        this.rank_id = rank_id;
-        this.create_date = create_date;
-        this.update_date = update_date;
-        this.client_reqid = client_reqid;
+        this.reportsTo = reportsTo;
+        this.deptId = deptId;
+        this.rankId = rankId;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+        this.clientReqId = clientReqId;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    // Default constructor
+    public Employee() {
     }
 
 }

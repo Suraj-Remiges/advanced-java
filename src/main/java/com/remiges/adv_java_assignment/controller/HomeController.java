@@ -7,31 +7,32 @@ import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HomeController {
 
+    // GetMapping to genetrate Hello response
     @GetMapping("/hello")
     public ResponseEntity<Object> helloWorld() {
         try {
-            // Generate a unique request ID
+            // Method to generate a unique request ID
             String reqid = generateReqId();
 
-            // Get client timestamp
+            // Methods to generate client timestamp,
             LocalDateTime clientTs = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
             String clientTsStr = formatter.format(clientTs);
 
-            // Prepare JSON response
+            // Prepare JSON response to retrun response to client
             String jsonResponse = "{\"status\":\"success\",\"status_code\":\"\",\"status_msg\":\"\",\"data\":{\"message\":\"Hello World\"},\"_reqid\":\""
                     + reqid + "\",\"_server_ts\":\"" + clientTsStr + "\"}";
 
             return ResponseEntity.ok().body(jsonResponse);
         } catch (Exception e) {
-            // Exception handling
+            // Handling exception
             String reqid = generateReqId();
             String errorMsg = e.getMessage();
             DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
@@ -48,14 +49,14 @@ public class HomeController {
         return UUID.randomUUID().toString().substring(0, 9);
     }
 
-    @PostMapping("/hello")
-    public ResponseEntity<String> helloWorld(@RequestBody String name) {
+    @PostMapping("/hello/{name}")
+    public ResponseEntity<String> helloWorld(@PathVariable String name) {
         try {
-            // Prepare greeting message
+            // Greeting message response
             String greeting = "Hello " + name;
             return ResponseEntity.ok().body(greeting);
         } catch (Exception e) {
-            // Exception handling
+            // Exception handling for if exception occurs
             String errorMsg = e.getMessage();
             return ResponseEntity.badRequest().body(errorMsg);
         }

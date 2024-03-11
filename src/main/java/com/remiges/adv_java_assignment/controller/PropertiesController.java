@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.remiges.adv_java_assignment.utility.Request;
 import com.remiges.adv_java_assignment.utility.Response;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 @RestController
-public class propertiesCont {
+public class PropertiesController {
 
     @Value("${my.property1:NULL}")
     private String property1;
@@ -31,10 +29,8 @@ public class propertiesCont {
     private String property3;
 
     @PostMapping("/myproperties")
-    public ResponseEntity<Response> getProperties(@RequestBody Request request, HttpServletRequest httpRequest) {
+    public ResponseEntity<Response> getProperties(@RequestBody Request request) {
         try {
-            // Get User-Agent from the request headers
-            String userAgent = httpRequest.getHeader("User-Agent");
 
             @SuppressWarnings("unchecked")
             List<String> propertyIdentifiers = (List<String>) request.getData().get("propertyIdentifiers");

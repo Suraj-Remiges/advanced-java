@@ -19,7 +19,7 @@ public class Response {
     private String reqId;
     private Instant serverTs;
 
-    // constructor with parameter
+    // Parameterised constructor
     public Response(String status, String statusCode, String statusMsg, Map<String, Object> data, String reqId,
             Instant serverTs) {
         this.status = status;
@@ -30,13 +30,7 @@ public class Response {
         this.serverTs = serverTs;
     }
 
-    // to get the data
-    public void setData(String string) {
-        // TODO Auto-generated method stub
-        return;
-    }
-
-    // to get random number
+    // Methid to generate random String
     public static String generateRandomNumberString(int length) {
         Random random = new Random();
         return random.ints(length, 0, 10)
