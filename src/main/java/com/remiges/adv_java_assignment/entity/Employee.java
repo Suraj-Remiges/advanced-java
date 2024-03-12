@@ -6,6 +6,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -47,14 +50,6 @@ public class Employee {
     @Column(name = "reports_to")
     private Integer reportsTo;
 
-    @ManyToOne
-    @JoinColumn(name = "dept_id")
-    private Departments departments;
-
-    @ManyToOne
-    @JoinColumn(name = "rank_id")
-    private Ranks rank;
-
     @CreationTimestamp
     @Column(name = "create_date")
     private java.util.Date createDate;
@@ -67,6 +62,14 @@ public class Employee {
     @Column(name = "client_reqid")
     private String clientReqId;
 
+    @ManyToOne
+    @JoinColumn(name = "dept_id")
+    private Integer departments;
+
+    @ManyToOne
+    @JoinColumn(name = "rank_id")
+    private Integer rank;
+
     // Constructor
 
     public String getFullName() {
@@ -74,7 +77,7 @@ public class Employee {
     }
 
     public Employee(Integer id, String empId, String fName, String fullName, Date dob, Date doj, Integer salary,
-            Integer reportsTo, Departments departments, Ranks rank, java.util.Date createDate,
+            Integer reportsTo, Integer departments, Integer rank, java.util.Date createDate,
             java.util.Date updateDate, String clientReqId) {
         this.id = id;
         this.empId = empId;

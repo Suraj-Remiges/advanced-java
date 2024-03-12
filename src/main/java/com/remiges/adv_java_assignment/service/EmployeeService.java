@@ -53,17 +53,17 @@ public class EmployeeService {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Employee with given id does not exist"));
 
-        // Departments dept =
+        // EmployeeShadow empShadow = new EmployeeShadow(
+        // employee.getId(),
+        // employee.getEmpId(),
+        // employee.getFName(),
+        // employee.getFullName(), employee.getDob(), employee.getDoj(),
+        // employee.getSalary(),
+        // employee.getReportsTo(), employee.getDepartments(), employee.getRankId(),
+        // employee.getCreateDate(),
+        // employee.getUpdateDate(), employee.getClientReqId());
 
-        EmployeeShadow empShadow = new EmployeeShadow(
-                employee.getId(),
-                employee.getEmpId(),
-                employee.getFName(),
-                employee.getFullName(), employee.getDob(), employee.getDoj(), employee.getSalary(),
-                employee.getReportsTo(), employee.getDepartments(), employee.getRank(), employee.getCreateDate(),
-                employee.getUpdateDate(), employee.getClientReqId());
-
-        employeeShadowRepository.save(empShadow);
+        // employeeShadowRepository.save(empShadow);
 
         employee.setEmpId(updateRequest.getEmpId());
         employee.setFName(updateRequest.getFName());
